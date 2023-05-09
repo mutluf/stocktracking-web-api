@@ -10,6 +10,7 @@ namespace StockTracking.Application.Mapping
         {
             CreateMap<CreateProductRequest,Product>().ReverseMap();
             CreateMap<CreateCategoryRequest,Category>().ReverseMap();
+            CreateMap<UpdateCategoryRequest,Category>().ReverseMap();   
         }
     }
 }

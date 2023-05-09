@@ -13,12 +13,8 @@ namespace StockTracking.Application.Features.Commands
         public string Brand { get; set; }
         public int Stock { get; set; }
         public int MinimumStock { get; set; }
-
         public int SupplierId { get; set; }
-
         public int DepotId { get; set; }
-
-
         public int CategoryId { get; set; }
         public double Price { get; set; }
         public string Description { get; set; }
@@ -38,7 +34,7 @@ namespace StockTracking.Application.Features.Commands
         public async Task<ProductCreateResponse> Handle(CreateProductRequest request, CancellationToken cancellationToken)
         {
             Product product = _mapper.Map<Product>(request);
-            bool result = await _productRepository.AddAysnc(product);
+            await _productRepository.AddAysnc(product);
             await _productRepository.SaveAysnc();
            
             int productId = product.Id;

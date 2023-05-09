@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StockTracking.Application.Features.Commands;
+using StockTracking.Application.Features.Queries;
 
 namespace StockTracking.API.Controllers
 {
@@ -16,10 +17,34 @@ namespace StockTracking.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("[action]")]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequest request)
         {
             CreateCategoryResponse response = await _mediator.Send(request);
+            return Ok(response);
+        }
+
+        [HttpDelete("[action]/{Id}")]
+        public async Task<IActionResult> DeleteCategory([FromRoute] DeleteCategoryRequest request)
+        {
+            DeleteCategoryResponse response = await _mediator.Send(request);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            GetAllCategoriesRequest request = new();
+            GetAllCategoriesResponse response = await _mediator.Send(request);
+
+            return Ok(response);
+        }
+
+        [HttpPut("[action]/{Id}")]
+        public async Task<IActionResult> UpdateCategory([FromBody] UpdateCategoryRequest request, [FromRoute] int Id)
+        {          
+            request.Id= Id;
+            UpdateCategoryResponse response = await _mediator.Send(request);
             return Ok(response);
         }
     }
