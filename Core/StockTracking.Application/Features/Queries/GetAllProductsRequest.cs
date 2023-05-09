@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 namespace StockTracking.Application.Features.Queries
 {
 
-    public class ProductGetAllRequest : IRequest<ProductGetAllResponse>
+    public class GetAllProductsRequest : IRequest<GetAllProductsResponse>
     {
     }
 
-    public class ProductGetAllHandler : IRequestHandler<ProductGetAllRequest, ProductGetAllResponse>
+    public class GetAllProductsHandler : IRequestHandler<GetAllProductsRequest, GetAllProductsResponse>
     {
         private readonly IProductRepository _productRepository;
 
-        public ProductGetAllHandler(IProductRepository productRepository)
+        public GetAllProductsHandler(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
 
-        public async Task<ProductGetAllResponse> Handle(ProductGetAllRequest request, CancellationToken cancellationToken)
+        public async Task<GetAllProductsResponse> Handle(GetAllProductsRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Product> products = _productRepository.GetAll();
             return new()
@@ -33,7 +33,7 @@ namespace StockTracking.Application.Features.Queries
         }
     }
 
-    public class ProductGetAllResponse
+    public class GetAllProductsResponse
     {
         public IQueryable<Product>? Products { get; set; }
     }

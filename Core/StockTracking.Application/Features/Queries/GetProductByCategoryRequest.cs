@@ -4,21 +4,21 @@ using StockTracking.Domain.Entities;
 
 namespace StockTracking.Application.Features.Queries
 {
-    public class GetProductByCategoryRequest:IRequest<ProductGetByCategoryResponse>
+    public class GetProductByCategoryRequest:IRequest<GetProductByCategoryResponse>
     {
         public string CategoryName { get; set; }
     }
 
-    public class ProductGetByCategoryHandler : IRequestHandler<GetProductByCategoryRequest, ProductGetByCategoryResponse>
+    public class GetProductByCategoryHandler : IRequestHandler<GetProductByCategoryRequest, GetProductByCategoryResponse>
     {
         IProductRepository _productRepository;
 
-        public ProductGetByCategoryHandler(IProductRepository productRepository)
+        public GetProductByCategoryHandler(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
 
-        public async Task<ProductGetByCategoryResponse> Handle(GetProductByCategoryRequest request, CancellationToken cancellationToken)
+        public async Task<GetProductByCategoryResponse> Handle(GetProductByCategoryRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Product> products =  _productRepository.GetWhere(p => p.Category.CategoryName == request.CategoryName);
 
@@ -29,7 +29,7 @@ namespace StockTracking.Application.Features.Queries
         }
     }
 
-    public class ProductGetByCategoryResponse
+    public class GetProductByCategoryResponse
     {
         public IQueryable<Product> Products { get; set; }   
     }
