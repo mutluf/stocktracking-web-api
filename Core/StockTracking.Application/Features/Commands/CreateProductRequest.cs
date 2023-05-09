@@ -5,7 +5,7 @@ using StockTracking.Domain.Entities;
 
 namespace StockTracking.Application.Features.Commands
 {
-    public class ProductCreateRequest : IRequest<ProductCreateResponse>
+    public class CreateProductRequest : IRequest<ProductCreateResponse>
     {
         public int Id { get; set; }
         public string ProductName { get; set; }
@@ -24,7 +24,7 @@ namespace StockTracking.Application.Features.Commands
         public string Description { get; set; }
     }
 
-    public class ProductCreateHandler : IRequestHandler<ProductCreateRequest, ProductCreateResponse>
+    public class ProductCreateHandler : IRequestHandler<CreateProductRequest, ProductCreateResponse>
     {
         private readonly IMapper _mapper;
         private readonly IProductRepository _productRepository;
@@ -35,7 +35,7 @@ namespace StockTracking.Application.Features.Commands
             _productRepository = productRepository;
         }
 
-        public async Task<ProductCreateResponse> Handle(ProductCreateRequest request, CancellationToken cancellationToken)
+        public async Task<ProductCreateResponse> Handle(CreateProductRequest request, CancellationToken cancellationToken)
         {
             Product product = _mapper.Map<Product>(request);
             bool result = await _productRepository.AddAysnc(product);

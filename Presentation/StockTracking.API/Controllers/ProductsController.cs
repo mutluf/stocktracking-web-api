@@ -29,14 +29,14 @@ namespace StockTracking.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProduct([FromBody] ProductCreateRequest request)
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequest request)
         {
             ProductCreateResponse response = await _mediator.Send(request);
             return Ok(response);
         }
 
         [HttpGet("{CategoryName}")]
-        public async Task<IActionResult> GetProductsByName([FromRoute] ProductGetByCategoryRequest request)
+        public async Task<IActionResult> GetProductsByName([FromRoute] GetProductByCategoryRequest request)
         {
             ProductGetByCategoryResponse response = await _mediator.Send(request);
 

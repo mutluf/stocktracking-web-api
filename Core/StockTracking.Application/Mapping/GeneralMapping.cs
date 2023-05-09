@@ -8,7 +8,7 @@ namespace StockTracking.Application.Mapping
     {
         public GeneralMapping()
         {
-            CreateMap<ProductCreateRequest,Product>().ReverseMap();
+            CreateMap<CreateProductRequest,Product>().ReverseMap();
         }
     }
 }
