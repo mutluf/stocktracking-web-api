@@ -42,28 +42,28 @@ namespace StockTracking.Persistence.Repositories
 
         public IQueryable<T> GetAll()
         {
-            var query = Table.AsQueryable();
+            var query = Table.AsQueryable().AsNoTracking();
             return query;
         }
 
-        public async Task<T> GetByIdAysnc(string id)
+        public async Task<T?> GetByIdAysnc(string id)
         {
-            var query = Table.AsQueryable();
+            var query = Table.AsQueryable().AsNoTracking() ;
 
             return await query.FirstOrDefaultAsync(data => data.Id == int.Parse(id));
         }
 
-        public async Task<T> GetSingleAysnc(Expression<Func<T, bool>> method)
+        public async Task<T?> GetSingleAysnc(Expression<Func<T, bool>> method)
         {
 
-            var query = Table.AsQueryable();
+            var query = await Table.AsQueryable().AsNoTracking().FirstOrDefaultAsync(method);
 
-            return await query.FirstOrDefaultAsync(method);
+            return query;
         }
 
         public IQueryable<T> GetWhere(Expression<Func<T, bool>> method)
         {
-            var query = Table.Where(method).AsQueryable();
+            var query = Table.Where(method).AsQueryable().AsNoTracking();
             return query;
         }
 

@@ -14,6 +14,7 @@ namespace StockTracking.Persistence
             services.AddDbContext<StockTrackingAPIDbContext>(options =>
      options.UseSqlServer(Configuration.ConnectionString));
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
         }
     }
 

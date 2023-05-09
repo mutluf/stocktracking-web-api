@@ -2,7 +2,7 @@
 
 namespace StockTracking.Application.Repositories
 {
-    public interface ICategoryRepository:IRepository<Category>
+    public interface ICategoryRepository:IGenericRepository<Category>
     {
     }
 }

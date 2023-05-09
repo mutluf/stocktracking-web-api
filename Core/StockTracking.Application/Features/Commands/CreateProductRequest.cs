@@ -40,7 +40,7 @@ namespace StockTracking.Application.Features.Commands
             Product product = _mapper.Map<Product>(request);
             bool result = await _productRepository.AddAysnc(product);
             await _productRepository.SaveAysnc();
-
+           
             int productId = product.Id;
 
             return new()
