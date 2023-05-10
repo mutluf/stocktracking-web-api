@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using StockTracking.Domain.Entities;
+using StockTracking.Domain.Entities.User;
 
 namespace StockTracking.Persistence.Context
 {
-    public class StockTrackingAPIDbContext : DbContext
+    public class StockTrackingAPIDbContext : IdentityDbContext<User,Role,int>
     {
         public StockTrackingAPIDbContext(DbContextOptions options) : base(options)
         {
