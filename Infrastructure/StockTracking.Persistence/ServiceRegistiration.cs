@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StockTracking.Application.Repositories;
+using StockTracking.Domain.Entities.User;
 using StockTracking.Persistence.Context;
 using StockTracking.Persistence.Repositories;
 
@@ -15,6 +16,19 @@ namespace StockTracking.Persistence
      options.UseSqlServer(Configuration.ConnectionString));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+
+            services.AddIdentity<User, Role>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireDigit = true;
+                options.User.RequireUniqueEmail = true;
+
+            }
+
+            ).AddEntityFrameworkStores<StockTrackingAPIDbContext>();
         }
     }
 

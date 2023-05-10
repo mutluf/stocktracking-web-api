@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using StockTracking.Application.Features.Commands;
 using StockTracking.Domain.Entities;
+using StockTracking.Domain.Entities.User;
 
 namespace StockTracking.Application.Mapping
 {
@@ -11,6 +12,8 @@ namespace StockTracking.Application.Mapping
             CreateMap<CreateProductRequest,Product>().ReverseMap();
             CreateMap<CreateCategoryRequest,Category>().ReverseMap();
             CreateMap<UpdateCategoryRequest,Category>().ReverseMap();   
+
+            CreateMap<CreateCategoryRequest,User>().ReverseMap();
         }
     }
 }
