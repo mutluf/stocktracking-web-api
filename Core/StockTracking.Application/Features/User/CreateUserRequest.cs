@@ -28,7 +28,7 @@ namespace StockTracking.Application.Features
         public async Task<CreateUserResponse> Handle(CreateUserRequest request, CancellationToken cancellationToken)
         {
             User user = _mapper.Map<User>(request);
-            IdentityResult result = await _userManager.CreateAsync(user);
+            IdentityResult result = await _userManager.CreateAsync(user,request.Password);
 
             List<string> errors = new();
 

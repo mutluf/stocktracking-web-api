@@ -1,8 +1,7 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StockTracking.Application.Features;
-using StockTracking.Application.Features.Commands;
+using System.Net;
 
 namespace StockTracking.API.Controllers
 {
@@ -11,10 +10,11 @@ namespace StockTracking.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
-        readonly IConfiguration _configuration;
+        
         public UsersController(IMediator mediator)
         {
             _mediator = mediator;
+            
         }
 
         [HttpPost("[action]")]
@@ -22,6 +22,33 @@ namespace StockTracking.API.Controllers
         {
             CreateUserResponse response = await _mediator.Send(request);
             return Ok(response);
+        }
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Login(LoginUserRequest loginUserCommandRequest)
+        {
+            LoginUserResponse response = await _mediator.Send(loginUserCommandRequest);
+            if (response.Message == "Giriş başarılı")
+            {
+                Response.Cookies.Append(
+                    "access_token",
+             response.AccessToken.AccesssToken,
+            new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = DateTime.UtcNow.AddDays(7),
+                IsEssential = true,
+                SameSite = SameSiteMode.None,
+                Secure = true,
+
+
+            });
+                return Ok(response);
+            }
+            else
+            {
+                return StatusCode((int)HttpStatusCode.NotAcceptable, response);
+            }
+
         }
     }
 }
