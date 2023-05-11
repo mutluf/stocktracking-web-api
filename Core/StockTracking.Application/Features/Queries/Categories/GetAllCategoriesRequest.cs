@@ -2,9 +2,9 @@
 using StockTracking.Application.Repositories;
 using StockTracking.Domain.Entities;
 
-namespace StockTracking.Application.Features.Queries
+namespace StockTracking.Application.Features.Queries.Categories
 {
-    public class GetAllCategoriesRequest:IRequest<GetAllCategoriesResponse>
+    public class GetAllCategoriesRequest : IRequest<GetAllCategoriesResponse>
     {
     }
     public class GetAllCategoriesHandler : IRequestHandler<GetAllCategoriesRequest, GetAllCategoriesResponse>
@@ -21,12 +21,12 @@ namespace StockTracking.Application.Features.Queries
             IQueryable<Category> categories = _categoryRepository.GetAll();
             return new()
             {
-                Categories= categories,
+                Categories = categories,
             };
         }
     }
     public class GetAllCategoriesResponse
     {
-        public IQueryable<Category> Categories { get; set; }    
+        public IQueryable<Category> Categories { get; set; }
     }
 }

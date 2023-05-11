@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using StockTracking.Application.Features.Commands;
-using StockTracking.Application.Features.Queries;
+using StockTracking.Application.Features.Commands.Categories;
+using StockTracking.Application.Features.Queries.Categories;
 
 namespace StockTracking.API.Controllers
 {

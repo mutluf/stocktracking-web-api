@@ -3,7 +3,7 @@ using MediatR;
 using StockTracking.Application.Repositories;
 using StockTracking.Domain.Entities;
 
-namespace StockTracking.Application.Features.Commands
+namespace StockTracking.Application.Features.Commands.Products
 {
     public class CreateProductRequest : IRequest<ProductCreateResponse>
     {
@@ -36,7 +36,7 @@ namespace StockTracking.Application.Features.Commands
             Product product = _mapper.Map<Product>(request);
             await _productRepository.AddAysnc(product);
             await _productRepository.SaveAysnc();
-           
+
             int productId = product.Id;
 
             return new()

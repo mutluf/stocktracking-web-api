@@ -2,9 +2,9 @@
 using StockTracking.Application.Repositories;
 using StockTracking.Domain.Entities;
 
-namespace StockTracking.Application.Features.Commands
+namespace StockTracking.Application.Features.Commands.Categories
 {
-    public class DeleteCategoryRequest:IRequest<DeleteCategoryResponse>
+    public class DeleteCategoryRequest : IRequest<DeleteCategoryResponse>
     {
         public int Id { get; set; }
     }

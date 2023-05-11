@@ -2,8 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using StockTracking.Application.Features.Commands;
-using StockTracking.Application.Features.Queries;
+using StockTracking.Application.Features.Commands.Products;
+using StockTracking.Application.Features.Queries.Categories;
+using StockTracking.Application.Features.Queries.Products;
 
 namespace StockTracking.API.Controllers
 {
@@ -41,6 +42,15 @@ namespace StockTracking.API.Controllers
             GetProductByCategoryResponse response = await _mediator.Send(request);
 
             return Ok(response);    
+        }
+
+
+        [HttpPost("[action]/{Id}")]
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductRequest request, [FromRoute] int Id)
+        {
+            request.Id = Id;
+            UpdateProductResponse response = await _mediator.Send(request);
+            return Ok(response);
         }
     }
 }

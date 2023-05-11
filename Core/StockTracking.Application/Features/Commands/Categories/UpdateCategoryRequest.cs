@@ -3,9 +3,9 @@ using MediatR;
 using StockTracking.Application.Repositories;
 using StockTracking.Domain.Entities;
 
-namespace StockTracking.Application.Features.Commands
+namespace StockTracking.Application.Features.Commands.Categories
 {
-    public class UpdateCategoryRequest:IRequest<UpdateCategoryResponse>
+    public class UpdateCategoryRequest : IRequest<UpdateCategoryResponse>
     {
         public int Id { get; set; }
         public string? CategoryName { get; set; }

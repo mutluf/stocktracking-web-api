@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockTracking.Application.Features.Queries
+namespace StockTracking.Application.Features.Queries.Products
 {
 
     public class GetAllProductsRequest : IRequest<GetAllProductsResponse>

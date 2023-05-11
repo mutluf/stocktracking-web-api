@@ -3,9 +3,9 @@ using MediatR;
 using StockTracking.Application.Repositories;
 using StockTracking.Domain.Entities;
 
-namespace StockTracking.Application.Features.Commands
+namespace StockTracking.Application.Features.Commands.Categories
 {
-    public class CreateCategoryRequest:IRequest<CreateCategoryResponse>
+    public class CreateCategoryRequest : IRequest<CreateCategoryResponse>
     {
         public string CategoryName { get; set; }
         public string Description { get; set; }
@@ -15,9 +15,9 @@ namespace StockTracking.Application.Features.Commands
     {
         IMapper _mapper;
         private readonly ICategoryRepository _categoryRepository;
-        
 
-        public CreateCategoryHandler(IMapper mapper, ICategoryRepository categoryRepository )
+
+        public CreateCategoryHandler(IMapper mapper, ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
@@ -25,7 +25,7 @@ namespace StockTracking.Application.Features.Commands
 
         public async Task<CreateCategoryResponse> Handle(CreateCategoryRequest request, CancellationToken cancellationToken)
         {
-            Category category =  _mapper.Map<Category>(request);
+            Category category = _mapper.Map<Category>(request);
             await _categoryRepository.AddAysnc(category);
             await _categoryRepository.SaveAysnc();
 

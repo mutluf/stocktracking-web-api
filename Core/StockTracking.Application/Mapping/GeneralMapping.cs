@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using StockTracking.Application.Features;
-using StockTracking.Application.Features.Commands;
+using StockTracking.Application.Features.Commands.Categories;
+using StockTracking.Application.Features.Commands.Products;
 using StockTracking.Domain.Entities;
 using StockTracking.Domain.Entities.User;
 
