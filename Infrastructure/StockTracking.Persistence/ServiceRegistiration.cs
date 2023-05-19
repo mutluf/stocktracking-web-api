@@ -16,6 +16,7 @@ namespace StockTracking.Persistence
      options.UseSqlServer(Configuration.ConnectionString));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IDepotRepository, DepotRepository>();
 
 
             services.AddIdentity<User, Role>(options =>
