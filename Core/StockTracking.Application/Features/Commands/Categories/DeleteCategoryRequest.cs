@@ -8,7 +8,6 @@ namespace StockTracking.Application.Features.Commands.Categories
     {
         public int Id { get; set; }
     }
-
     public class DeleteCategoryHandler : IRequestHandler<DeleteCategoryRequest, DeleteCategoryResponse>
     {
         private readonly ICategoryRepository _categoryRepository;
@@ -17,7 +16,6 @@ namespace StockTracking.Application.Features.Commands.Categories
         {
             _categoryRepository = categoryRepository;
         }
-
         public async Task<DeleteCategoryResponse> Handle(DeleteCategoryRequest request, CancellationToken cancellationToken)
         {
             Category category = await _categoryRepository.GetByIdAysnc(request.Id.ToString());

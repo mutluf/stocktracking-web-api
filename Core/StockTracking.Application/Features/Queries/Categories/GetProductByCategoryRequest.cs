@@ -8,7 +8,6 @@ namespace StockTracking.Application.Features.Queries.Categories
     {
         public string CategoryName { get; set; }
     }
-
     public class GetProductByCategoryHandler : IRequestHandler<GetProductByCategoryRequest, GetProductByCategoryResponse>
     {
         IProductRepository _productRepository;
@@ -21,14 +20,12 @@ namespace StockTracking.Application.Features.Queries.Categories
         public async Task<GetProductByCategoryResponse> Handle(GetProductByCategoryRequest request, CancellationToken cancellationToken)
         {
             IQueryable<Product> products = _productRepository.GetWhere(p => p.Category.CategoryName == request.CategoryName);
-
             return new()
             {
                 Products = products,
             };
         }
     }
-
     public class GetProductByCategoryResponse
     {
         public IQueryable<Product> Products { get; set; }

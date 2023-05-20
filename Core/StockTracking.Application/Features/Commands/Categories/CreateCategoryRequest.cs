@@ -10,12 +10,10 @@ namespace StockTracking.Application.Features.Commands.Categories
         public string CategoryName { get; set; }
         public string Description { get; set; }
     }
-
     public class CreateCategoryHandler : IRequestHandler<CreateCategoryRequest, CreateCategoryResponse>
     {
         IMapper _mapper;
         private readonly ICategoryRepository _categoryRepository;
-
 
         public CreateCategoryHandler(IMapper mapper, ICategoryRepository categoryRepository)
         {
@@ -35,7 +33,6 @@ namespace StockTracking.Application.Features.Commands.Categories
             };
         }
     }
-
     public class CreateCategoryResponse
     {
         public string Message { get; set; }

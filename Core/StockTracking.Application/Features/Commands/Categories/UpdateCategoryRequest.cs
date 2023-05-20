@@ -20,7 +20,6 @@ namespace StockTracking.Application.Features.Commands.Categories
             _mapper = mapper;
             _categoryRepository = categoryRepository;
         }
-
         public async Task<UpdateCategoryResponse> Handle(UpdateCategoryRequest request, CancellationToken cancellationToken)
         {
             Category category = _mapper.Map<Category>(request);

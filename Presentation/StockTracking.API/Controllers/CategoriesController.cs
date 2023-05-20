@@ -36,7 +36,6 @@ namespace StockTracking.API.Controllers
         {
             GetAllCategoriesRequest request = new();
             GetAllCategoriesResponse response = await _mediator.Send(request);
-
             return Ok(response);
         }
 

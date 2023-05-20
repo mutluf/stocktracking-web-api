@@ -8,5 +8,4 @@ namespace StockTracking.Application.Repositories
         DbSet<T> Table { get; }
     }
 
-
 }

@@ -13,10 +13,10 @@ namespace StockTracking.Persistence
         public static void AddPersistenceService(this IServiceCollection services)
         {
             services.AddDbContext<StockTrackingAPIDbContext>(options =>
-     options.UseSqlServer(Configuration.ConnectionString));
+            options.UseSqlServer(Configuration.ConnectionString));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-
+            services.AddScoped<IDepotRepository, DepotRepository>();
 
             services.AddIdentity<User, Role>(options =>
             {
@@ -25,9 +25,7 @@ namespace StockTracking.Persistence
                 options.Password.RequireLowercase = true;
                 options.Password.RequireDigit = true;
                 options.User.RequireUniqueEmail = true;
-
             }
-
             ).AddEntityFrameworkStores<StockTrackingAPIDbContext>();
         }
     }

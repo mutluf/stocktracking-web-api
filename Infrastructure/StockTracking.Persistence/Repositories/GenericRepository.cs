@@ -10,12 +10,10 @@ namespace StockTracking.Persistence.Repositories
     public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly StockTrackingAPIDbContext _context;
-
         public GenericRepository(StockTrackingAPIDbContext context)
         {
             _context = context;
         }
-
         public DbSet<T> Table => _context.Set<T>();
 
         public async Task<bool> AddAysnc(T Model)
@@ -49,15 +47,12 @@ namespace StockTracking.Persistence.Repositories
         public async Task<T?> GetByIdAysnc(string id)
         {
             var query = Table.AsQueryable().AsNoTracking() ;
-
             return await query.FirstOrDefaultAsync(data => data.Id == int.Parse(id));
         }
 
         public async Task<T?> GetSingleAysnc(Expression<Func<T, bool>> method)
         {
-
             var query = await Table.AsQueryable().AsNoTracking().FirstOrDefaultAsync(method);
-
             return query;
         }
 
