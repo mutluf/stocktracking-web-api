@@ -4,6 +4,10 @@ using Microsoft.IdentityModel.Tokens;
 using StockTracking.Persistence;
 using StockTracking.Infrastructure;
 using System.Text;
+using StockTracking.Infrastructure.SqlTableDependency;
+using StockTracking.Infrastructure.SqlTableDependency.Middleware;
+using StockTracking.Domain.Entities;
+using StockTracking.Infrastructure.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = AppDomain.CurrentDomain.GetAssemblies();
@@ -53,6 +57,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
     });
+builder.Services.AddSignalR(e => {
+    e.MaximumReceiveMessageSize = 102400000;
+    e.EnableDetailedErrors = true;
+});
 
 
 var app = builder.Build();
@@ -63,11 +71,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
-app.UseAuthorization();
 
 app.MapControllers();
+app.UseDatabaseSubscription<DatabaseSubscription<Product>>("Products");
+app.UseRouting();
+app.UseAuthorization();
+app.MapHub<ProductHub>("/productshub");
 
 app.Run();

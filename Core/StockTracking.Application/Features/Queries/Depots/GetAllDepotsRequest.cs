@@ -1,6 +1,4 @@
-﻿
-
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using StockTracking.Application.Repositories;
 using StockTracking.Domain.Entities;
