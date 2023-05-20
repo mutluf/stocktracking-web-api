@@ -22,6 +22,8 @@ namespace StockTracking.Application.Mapping
             CreateMap<Depot,UpdateDepotRequest>().ReverseMap();
             CreateMap<Supplier,CreateSupplierRequest>().ReverseMap();
             CreateMap<Supplier,UpdateSupplierRequest>().ReverseMap();   
+            CreateMap<Supplier,CreateStockMovementTypeRequest>().ReverseMap();   
+            CreateMap<Supplier,UpdateStockMovementTypeRequest>().ReverseMap();   
         }
     }
 }
