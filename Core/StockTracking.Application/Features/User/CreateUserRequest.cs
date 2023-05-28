@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using StockTracking.Application.Background;
 using StockTracking.Domain.Entities.User;
 
 namespace StockTracking.Application.Features
@@ -18,11 +19,13 @@ namespace StockTracking.Application.Features
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly IUserBackgroundJob _backgroundJob;
 
-        public CreateUserHandler(IMapper mapper, UserManager<User> userManager)
+        public CreateUserHandler(IMapper mapper, UserManager<User> userManager, IUserBackgroundJob backgroundJob)
         {
             _mapper = mapper;
             _userManager = userManager;
+            _backgroundJob = backgroundJob;
         }
 
         public async Task<CreateUserResponse> Handle(CreateUserRequest request, CancellationToken cancellationToken)
@@ -39,10 +42,13 @@ namespace StockTracking.Application.Features
 
             if (result.Succeeded)
             {
+                _backgroundJob.AddEnque(() => Console.WriteLine("Kullanıcıya hoş geldin maili gönderildi."));
+
                 return new()
                 {
                     Message = "Kayıt başarıyla oluşturuldu."
                 };
+                
             }
             else
             {

@@ -7,6 +7,7 @@ namespace StockTracking.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -23,6 +24,7 @@ namespace StockTracking.API.Controllers
             CreateUserResponse response = await _mediator.Send(request);
             return Ok(response);
         }
+
         [HttpPost("[action]")]
         public async Task<IActionResult> Login(LoginUserRequest loginUserCommandRequest)
         {
@@ -39,8 +41,6 @@ namespace StockTracking.API.Controllers
                 IsEssential = true,
                 SameSite = SameSiteMode.None,
                 Secure = true,
-
-
             });
                 return Ok(response);
             }

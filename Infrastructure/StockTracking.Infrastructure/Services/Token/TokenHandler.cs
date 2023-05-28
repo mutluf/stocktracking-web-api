@@ -14,12 +14,10 @@ namespace StockTracking.Infrastructure.Services.Token
     public class TokenHandler : ITokenHandler
     {
         readonly IConfiguration _configuration;
-
         public TokenHandler(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-
         public Application.DTOS.Token CreateAccess(int minute,string userId)
         {
             Application.DTOS.Token token = new Application.DTOS.Token();
@@ -36,13 +34,10 @@ namespace StockTracking.Infrastructure.Services.Token
                 notBefore: DateTime.Now,
                 signingCredentials: signingCredentials,
                 
-
                 claims: new List<Claim>
                 {
                     new Claim(JwtRegisteredClaimNames.Sub,userId)
-                }
-                
-
+                }             
                 );
             //token oluşturucu sınıfından örnek alıyoruz.
             JwtSecurityTokenHandler tokenHandler = new();

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StockTracking.Application.Features.Commands.Categories;
 using StockTracking.Application.Features.Queries.Categories;
