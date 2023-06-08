@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Hangfire;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StockTracking.Application.Background;
 using StockTracking.Application.Repositories;
 using StockTracking.Domain.Entities.User;
+using StockTracking.Persistence.Background;
 using StockTracking.Persistence.Context;
 using StockTracking.Persistence.Repositories;
 
@@ -21,6 +24,7 @@ namespace StockTracking.Persistence
             services.AddScoped<IStockMovementRepository, StockMovementRepository>();
             services.AddScoped<IStockMovementTypeRepository, StockMovementTypeRepository>();
 
+            services.AddScoped<IUserBackgroundJob,UserBackgroundJob>();
 
             services.AddIdentity<User, Role>(options =>
             {
@@ -31,8 +35,17 @@ namespace StockTracking.Persistence
                 options.User.RequireUniqueEmail = true;
 
             }
-
             ).AddEntityFrameworkStores<StockTrackingAPIDbContext>();
+
+
+            services.AddHangfire(configuration => configuration
+                    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                    .UseSimpleAssemblyNameTypeSerializer()
+                    .UseRecommendedSerializerSettings()
+                    .UseSqlServerStorage(Configuration.ConnectionString));
+            
+
+            services.AddHangfireServer();
         }
     }
 

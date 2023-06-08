@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using StockTracking.Application.Abstractions.Token;
+using StockTracking.Application.Background;
 using StockTracking.Application.DTOS;
 using StockTracking.Domain.Entities.User;
 
@@ -16,12 +17,14 @@ namespace StockTracking.Application.Features
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ITokenHandler _tokenHandler;
+        private readonly IUserBackgroundJob _userBackgroundJob;
 
-        public LoginUserHandler(SignInManager<User> signInManager, UserManager<User> userManager, ITokenHandler tokenHandler = null)
+        public LoginUserHandler(SignInManager<User> signInManager, UserManager<User> userManager, ITokenHandler tokenHandler, IUserBackgroundJob userBackgroundJob)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _tokenHandler = tokenHandler;
+            _userBackgroundJob = userBackgroundJob;
         }
 
 
@@ -37,6 +40,7 @@ namespace StockTracking.Application.Features
 
             if (result.Succeeded)
             {
+                _userBackgroundJob.AddEnque(() => Console.WriteLine("Kullanıcıya hoş geldin maili gönderildi."));
                 Token token = _tokenHandler.CreateAccess(10, user.Id.ToString());
                 return new ()
                 {

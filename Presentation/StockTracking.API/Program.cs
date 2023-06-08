@@ -1,18 +1,19 @@
+using Hangfire;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using StockTracking.Persistence;
+using StockTracking.Domain.Entities;
 using StockTracking.Infrastructure;
-using System.Text;
+using StockTracking.Infrastructure.Hubs;
 using StockTracking.Infrastructure.SqlTableDependency;
 using StockTracking.Infrastructure.SqlTableDependency.Middleware;
-using StockTracking.Domain.Entities;
-using StockTracking.Infrastructure.Hubs;
+using StockTracking.Persistence;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = AppDomain.CurrentDomain.GetAssemblies();
 // Add services to the container.
-
+IConfiguration configuration = builder.Configuration;
 
 
 builder.Services.AddPersistenceService();
@@ -25,7 +26,8 @@ builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)  
     .AddCookie(x =>
     {
         x.Cookie.Name = "access_token";
@@ -33,17 +35,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     })
     .AddJwtBearer("User", options =>
     {
-        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateAudience = true,
             ValidateIssuer = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-
             ValidAudience = builder.Configuration["Token:Audience"],
             ValidIssuer = builder.Configuration["Token:Issuer"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"]))
-
         };
 
         options.Events = new JwtBearerEvents
@@ -57,6 +57,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
     });
+    
+
 builder.Services.AddSignalR(e => {
     e.MaximumReceiveMessageSize = 102400000;
     e.EnableDetailedErrors = true;
@@ -77,9 +79,12 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.MapControllers();
+app.UseSwagger();
 app.UseDatabaseSubscription<DatabaseSubscription<Product>>("Products");
 app.UseRouting();
 app.UseAuthorization();
+
+app.UseHangfireDashboard();
 app.MapHub<ProductHub>("/productshub");
 
 app.Run();

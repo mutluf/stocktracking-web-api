@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StockTracking.Application.Abstractions.Token
+﻿namespace StockTracking.Application.Abstractions.Token
 {
     public interface ITokenHandler
     {
