@@ -20,8 +20,6 @@ namespace StockTracking.Infrastructure.SqlTableDependency
         IConfiguration _configuration;
         IHubContext<ProductHub> _hubContext;
         private readonly IServiceScopeFactory _serviceScopeFactory;
-
-
         public DatabaseSubscription(IConfiguration configuration, IHubContext<ProductHub> hubContext, IServiceScopeFactory serviceScopeFactory)
         {
             _configuration = configuration;
@@ -34,45 +32,21 @@ namespace StockTracking.Infrastructure.SqlTableDependency
             _tableDependency = new SqlTableDependency<T>(_configuration.GetConnectionString("MicrosoftSQL"), tableName);
             _tableDependency.OnChanged += async (o, e) =>
             {
-                //List<Product> datas;
                 List<Product> datas;
                 T dataBack = new T();
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
                     var myScopedService = scope.ServiceProvider.GetService<IProductRepository>();
-
-                    //datas= myScopedService.GetAll().ToList();
-                    //var datas2 = myScopedService.GetAll().Include(data => data.Category);
-                    //foreach (var item in datas2)
-                    //{
-                    //    item.CategoryName = item.Category.CategoryName;
-                    //}
-                    //datas = datas2.ToList();
-
-
                     dataBack =  e.Entity;
-
-
-                    //datas = myScopedService.GetAll().ToList();
-
                 }
                 await _hubContext.Clients.All.SendAsync("receiveMessage", dataBack);
-
-
             };
-            _tableDependency.OnError += (o, e) =>
-            {
-
-            };
+            _tableDependency.OnError += (o, e) => {};
             _tableDependency.Start();
-
-
         }
         ~DatabaseSubscription()
         {
             _tableDependency.Stop();
         }
-
-
     }
 }
