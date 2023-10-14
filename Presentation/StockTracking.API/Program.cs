@@ -1,8 +1,5 @@
-using Autofac.Core;
 using Hangfire;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using StockTracking.Domain.Entities;
@@ -21,25 +18,6 @@ IConfiguration configuration = builder.Configuration;
 builder.Services.Configure<EventBusSettings>(options => configuration.GetSection(nameof(EventBusSettings)).Bind(options));
 //builder.Services.AddEventBusService(configuration);
 
-builder.Services.AddAuthentication().AddGoogle(googleOptions =>
-{
-    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
-});
-
-
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-//})
-//    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-//    .AddGoogle(options =>
-//    {
-//        options.ClientId = configuration["Authentication:Google:ClientId"];
-//        options.ClientSecret = configuration["Authentication:Google:ClientSecret"];
-//    });
-
 
 builder.Services.AddPersistenceService();
 builder.Services.AddInfrastructureServices();
@@ -50,7 +28,6 @@ builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)  
     .AddCookie(x =>
@@ -79,7 +56,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 return Task.CompletedTask;
             }
         };
-
 
     });
     

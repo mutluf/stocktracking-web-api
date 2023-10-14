@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using StockTracking.Application.Abstractions.Token;
 using StockTracking.Application.DTOS;
@@ -11,10 +12,13 @@ namespace StockTracking.Application.Features.GoogleLogin
     {
         private readonly UserManager<User> _userManager;
         private readonly ITokenHandler _tokenHandler;
-        public GoogleLoginCommandHandler(UserManager<User> userManager, ITokenHandler tokenHandler)
+        private readonly IMapper _mapper;
+
+        public GoogleLoginCommandHandler(UserManager<User> userManager, ITokenHandler tokenHandler, IMapper mapper)
         {
             _userManager = userManager;
             _tokenHandler = tokenHandler;
+            _mapper = mapper;
         }
 
         public async Task<GoogleLoginCommandResponse> Handle(GoogleLoginCommandRequest request, CancellationToken cancellationToken)
@@ -43,9 +47,11 @@ namespace StockTracking.Application.Features.GoogleLogin
                         Email = payload.Email,
                         UserName = payload.Email,
                         Name = payload.Name,
+                        Surname = payload.FamilyName
                     };
                 }
-               
+
+                //user = _mapper.Map<User>(request);
                 var identityResult =  await _userManager.CreateAsync(user);
                 result= identityResult.Succeeded;
             }
