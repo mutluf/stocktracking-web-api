@@ -22,7 +22,7 @@ namespace StockTracking.Application.Features.GoogleLogin
 
             var settings = new ValidationSettings()
             {
-                Audience = new List<string> { "102045876809-mfv4gsshjuav0mr2393o4e5ckh97o14n.apps.googleusercontent.com" }
+                Audience = new List<string> { "Client-ID-.apps.googleusercontent.com" }
             };
 
             var payload = await ValidateAsync(request.IdToken, settings);
