@@ -24,7 +24,7 @@ namespace StockTracking.Persistence
             services.AddScoped<IStockMovementRepository, StockMovementRepository>();
             services.AddScoped<IStockMovementTypeRepository, StockMovementTypeRepository>();
 
-            services.AddScoped<IUserBackgroundJob,UserBackgroundJob>();
+            
 
             services.AddIdentity<User, Role>(options =>
             {
@@ -38,6 +38,8 @@ namespace StockTracking.Persistence
             ).AddEntityFrameworkStores<StockTrackingAPIDbContext>();
 
 
+
+            services.AddScoped<IUserBackgroundJob, UserBackgroundJob>();
             services.AddHangfire(configuration => configuration
                     .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
                     .UseSimpleAssemblyNameTypeSerializer()

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using StockTracking.Application.Features;
+using StockTracking.Application.Features.GoogleLogin;
 using System.Net;
 
 namespace StockTracking.API.Controllers
@@ -11,11 +12,9 @@ namespace StockTracking.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
-        
         public UsersController(IMediator mediator)
         {
             _mediator = mediator;
-            
         }
 
         [HttpPost("[action]")]
@@ -48,7 +47,16 @@ namespace StockTracking.API.Controllers
             {
                 return StatusCode((int)HttpStatusCode.NotAcceptable, response);
             }
-
         }
+
+        [HttpPost("google-login")]
+        public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginCommandRequest request)
+        {
+            GoogleLoginCommandResponse response = await _mediator.Send(request);
+
+            return Ok(response);
+        }
+
     }
 }
+

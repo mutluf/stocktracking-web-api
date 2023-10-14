@@ -23,6 +23,10 @@ namespace StockTracking.Infrastructure
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients())
                 .AddInMemoryIdentityResources(Config.GetIdentityResources());
+
+
+                       
+
         }
     }
 
