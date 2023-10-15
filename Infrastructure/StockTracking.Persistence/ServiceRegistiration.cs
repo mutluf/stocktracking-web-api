@@ -2,12 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StockTracking.Application.Abstractions.Services;
 using StockTracking.Application.Background;
 using StockTracking.Application.Repositories;
 using StockTracking.Domain.Entities.User;
 using StockTracking.Persistence.Background;
 using StockTracking.Persistence.Context;
 using StockTracking.Persistence.Repositories;
+using StockTracking.Persistence.Services;
 
 namespace StockTracking.Persistence
 {
@@ -24,7 +26,9 @@ namespace StockTracking.Persistence
             services.AddScoped<IStockMovementRepository, StockMovementRepository>();
             services.AddScoped<IStockMovementTypeRepository, StockMovementTypeRepository>();
 
-            
+
+            services.AddSingleton<ICacheService, RedisCacheService>();
+
 
             services.AddIdentity<User, Role>(options =>
             {

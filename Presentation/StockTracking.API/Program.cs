@@ -2,6 +2,7 @@ using Hangfire;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using StackExchange.Redis;
 using StockTracking.Domain.Entities;
 using StockTracking.Infrastructure;
 using StockTracking.Infrastructure.Hubs;
@@ -22,6 +23,10 @@ builder.Services.Configure<EventBusSettings>(options => configuration.GetSection
 builder.Services.AddPersistenceService();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddControllers();
+
+var multiplexer = ConnectionMultiplexer.Connect(configuration.GetConnectionString("Redis"));
+builder.Services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());

@@ -43,6 +43,7 @@ namespace StockTracking.Persistence.Repositories
             var query = Table.AsQueryable().AsNoTracking();
             return query;
         }
+        
 
         public async Task<T?> GetByIdAysnc(string id)
         {
