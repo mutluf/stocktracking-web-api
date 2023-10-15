@@ -143,7 +143,7 @@ namespace StockTracking.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("StockTracking.Domain.Entities.Depot", b =>
@@ -168,7 +168,7 @@ namespace StockTracking.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Depots");
+                    b.ToTable("Depots", (string)null);
                 });
 
             modelBuilder.Entity("StockTracking.Domain.Entities.Product", b =>
@@ -221,7 +221,7 @@ namespace StockTracking.Persistence.Migrations
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("StockTracking.Domain.Entities.StockMovement", b =>
@@ -258,7 +258,7 @@ namespace StockTracking.Persistence.Migrations
 
                     b.HasIndex("StockMovementTypeId");
 
-                    b.ToTable("StockMovements");
+                    b.ToTable("StockMovements", (string)null);
                 });
 
             modelBuilder.Entity("StockTracking.Domain.Entities.StockMovementType", b =>
@@ -275,7 +275,7 @@ namespace StockTracking.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StockMovementTypes");
+                    b.ToTable("StockMovementTypes", (string)null);
                 });
 
             modelBuilder.Entity("StockTracking.Domain.Entities.Supplier", b =>
@@ -304,7 +304,7 @@ namespace StockTracking.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Suppliers");
+                    b.ToTable("Suppliers", (string)null);
                 });
 
             modelBuilder.Entity("StockTracking.Domain.Entities.User.Role", b =>

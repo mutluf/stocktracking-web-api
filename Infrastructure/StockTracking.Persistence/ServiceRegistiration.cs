@@ -49,7 +49,7 @@ namespace StockTracking.Persistence
                     .UseSimpleAssemblyNameTypeSerializer()
                     .UseRecommendedSerializerSettings()
                     .UseSqlServerStorage(Configuration.ConnectionString));
-            
+
 
             services.AddHangfireServer();
         }
