@@ -3,9 +3,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
+using StockTracking.API;
 using StockTracking.Domain.Entities;
 using StockTracking.Infrastructure;
 using StockTracking.Infrastructure.Hubs;
+using StockTracking.Infrastructure.MessageBus;
 using StockTracking.Infrastructure.SqlTableDependency;
 using StockTracking.Infrastructure.SqlTableDependency.Middleware;
 using StockTracking.Persistence;
@@ -34,6 +36,16 @@ builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IMessageBus,RabbitMQMessageBus>();
+
+using (RabbitMQMessageConsumer consumer = new RabbitMQMessageConsumer())
+{
+    consumer.StartConsuming();
+
+    // Uygulamanýn çalýþmasýný beklemek için bir þeyler yapabilirsiniz.
+
+    // using bloðu sonlandýðýnda, RabbitMQ baðlantýsý ve kanalý otomatik olarak kapatýlacaktýr.
+}
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)  
     .AddCookie(x =>
     {

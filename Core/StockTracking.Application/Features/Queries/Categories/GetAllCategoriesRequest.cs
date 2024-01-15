@@ -30,6 +30,7 @@ namespace StockTracking.Application.Features.Queries.Categories
                 return categories;
             });
 
+
             //return categories;
             //    IQueryable<Category> categories = _categoryRepository.GetAll();
             return new()

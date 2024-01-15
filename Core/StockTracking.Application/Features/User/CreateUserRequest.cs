@@ -20,6 +20,7 @@ namespace StockTracking.Application.Features
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IUserBackgroundJob _backgroundJob;
+        
 
         public CreateUserHandler(IMapper mapper, UserManager<User> userManager, IUserBackgroundJob backgroundJob)
         {
